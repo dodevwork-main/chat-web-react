@@ -9,7 +9,7 @@ type State = {
 const initialState: State = {
   user: null,
 }
-const name = 'name'
+const name = 'user'
 export const slice = createSlice({
   name,
   initialState,

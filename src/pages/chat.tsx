@@ -4,19 +4,27 @@ import { ChatBody } from '~/features/chat/body'
 import { Loading } from '~/shared/ui/Loading'
 import { ChatInput } from '~/features/chat/input'
 import { ChatHeader } from '~/features/chat/header'
+import { useGetChatBySlugQuery } from '~/store'
+
+type Params = {
+  slug: string
+}
 
 export default function ChatPage() {
-  const { chatId } = useParams<{ chatId: string }>()
+  const { slug } = useParams<Params>()
+  const { data: chat } = useGetChatBySlugQuery(slug ?? '', {
+    skip: !slug,
+  })
 
-  if (!chatId) return <Loading />
+  if (!chat) return <Loading />
 
   return (
     <>
-      <ChatHeader chatId={chatId} />
+      <ChatHeader chat={chat} />
 
-      <ChatBody chatId={chatId} />
+      <ChatBody chat={chat} />
 
-      <ChatInput chatId={chatId} />
+      <ChatInput chat={chat} />
     </>
   )
 }

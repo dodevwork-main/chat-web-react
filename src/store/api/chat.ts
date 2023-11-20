@@ -7,10 +7,14 @@ export type Chat = {
   description?: string
 }
 
-export const { useGetChatsQuery } = baseApi.injectEndpoints({
-  endpoints: (build) => ({
-    getChats: build.query<Chat[], void>({
-      query: () => '/chats',
+export const { useGetChatsQuery, useGetChatBySlugQuery } =
+  baseApi.injectEndpoints({
+    endpoints: (build) => ({
+      getChats: build.query<Chat[], void>({
+        query: () => '/chats',
+      }),
+      getChatBySlug: build.query<Chat | null, string>({
+        query: (slug) => `/chats/${slug}`,
+      }),
     }),
-  }),
-})
+  })
